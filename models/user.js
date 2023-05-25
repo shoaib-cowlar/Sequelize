@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.Post, { foreignKey: "userId" });
+      this.hasMany(models.Post, { foreignKey: "userId", as: "posts" });
     }
 
     toJSON() {
@@ -25,10 +25,19 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: { msg: "User shouldnt be Empty" },
+          notNull: { msg: "User Cant be Null" },
+        },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: { msg: "Email shouldnt be Empty" },
+          notNull: { msg: "Email Cant be Null" },
+          isEmail: { msg: "Must be a Valid Email address" },
+        },
       },
       role: {
         type: DataTypes.STRING,

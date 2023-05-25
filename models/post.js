@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User }) {
       // define association here
-      this.belongsTo(User, { foreignKey: "userId" });
+      this.belongsTo(User, { foreignKey: "userId", as: "user" });
     }
   }
   Post.init(
@@ -21,11 +21,15 @@ module.exports = (sequelize, DataTypes) => {
       body: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notEmpty: { msg: "Post shouldnt be Empty" },
+          notNull: { msg: "Post Cant be Null" },
+        },
       },
     },
     {
       sequelize,
-      tableName: "posts",
+      tableName: "Posts",
       modelName: "Post",
     }
   );
